@@ -171,3 +171,25 @@ a:hover{
     margin: 0 auto;
     margin-bottom: 2%;
 }
+
+.welcome-page-wrapper{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.welcome-page-wrapper h1{
+    font-weight: bold;
+}
+
+.welcome-page-wrapper a{
+    margin: 0 auto;
+    width: 80%;
+}
+
+.welcome-page-wrapper>img{
+    width: 50%;
+}
+
+.logged-in-info{
+}

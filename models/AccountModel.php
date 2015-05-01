@@ -20,7 +20,17 @@ class AccountModel extends BaseModel {
         return true;
     }
 
-    public function login($username, $passwrod){
+    public function login($username, $password){
+        $statement = self::$db->prepare("SELECT * FROM users WHERE username = ?");
+        $statement->bind_param("s", $username);
+        $statement->execute();
+        $result = $statement->get_result()->fetch_assoc();
+        var_dump($result['password_hash']);
 
+        if(password_verify($password, $result['password_hash'])) {
+            return true;
+        }
+
+        return false;
     }
 }

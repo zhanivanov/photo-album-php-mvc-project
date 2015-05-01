@@ -30,6 +30,7 @@
           <div class="col-lg-10 col-lg-offset-2">
             <button type="reset" class="btn btn-default">Cancel</button>
             <button type="submit" class="btn btn-primary">Register</button>
+            <a href="/account/login" class="btn btn-success btn-sm pull-right">Go to Login</a>
           </div>
         </div>
       </fieldset>
