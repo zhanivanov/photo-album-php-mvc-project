@@ -1,3 +1,4 @@
+</main>
 <footer class="text-center">
     <hr/>
     <p>Author:

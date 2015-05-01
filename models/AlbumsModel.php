@@ -19,8 +19,9 @@ class AlbumsModel extends BaseModel {
             return false;
         }
         $statement = self::$db->prepare(
-            "INSERT INTO albums VALUES(NULL, ?)");
-        $statement->bind_param("s", $name);
+            "INSERT INTO albums (name, created_on /*, user_id*/) VALUES(?, ?)");
+        $date = date('Y-m-d H:m:s', time());
+        $statement->bind_param("ss", $name, $date);
         $statement->execute();
         return $statement->affected_rows > 0;
     }

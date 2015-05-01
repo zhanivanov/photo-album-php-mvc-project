@@ -57,7 +57,10 @@ abstract class BaseController {
         if ($controller == null) {
             $controller = $this->controller;
         }
-        $url = "/$controller/$action";
+        $url = "/$controller";
+        if($action != null){
+            $url = $url . "/$action";
+        }
         $paramsUrlEncoded = array_map('urlencode', $params);
         $paramsJoined = implode('/', $paramsUrlEncoded);
         if ($paramsJoined != '') {

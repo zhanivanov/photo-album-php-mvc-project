@@ -2,20 +2,27 @@
 
 class AlbumsController extends BaseController {
     private $albumsModel;
+    private $photosModel;
 
     protected function onInit() {
         $this->title = 'Albums';
-        $this->albumsModel = new albumsModel();
+        $this->albumsModel = new AlbumsModel();
+        $this->photosModel = new PhotosModel();
     }
 
     public function index() {
         $this->albums = $this->albumsModel->getAll();
+        // $this->photos = $this->photosModel->getAll();
+    }
+
+    public function getPhotosByAlbumId($id) {
+        $this->photos = $this->photosModel->getByAlbumId($id);
     }
 
     public function create() {
         if ($this->isPost()) {
             $name = $_POST['name'];
-            if ($this->albums->create($name)) {
+            if ($this->albumsModel->create($name)) {
                 $this->addInfoMessage("Album created.");
                 $this->redirect("albums");
             } else {

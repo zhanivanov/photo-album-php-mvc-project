@@ -4,6 +4,10 @@
 <head>
     <script type="text/javascript" src="/content/bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/content/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="/content/js/onAlbumHover.js"></script>
+
+    <link rel="stylesheet" href="/content/styles.css"/>
     <link rel="stylesheet" href="/content/bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="/content/bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
     <title><?php echo htmlspecialchars($this->title) ?></title>
@@ -54,3 +58,4 @@
         </nav>
     </header>
     <?php include_once('messages.php'); ?>
+    <main class="jumbotron row" id="wrapper">
