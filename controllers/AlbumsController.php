@@ -12,6 +12,7 @@ class AlbumsController extends BaseController {
 
     public function index() {
         $this->albums = $this->albumsModel->getAll();
+        $this->renderView();
         // $this->photos = $this->photosModel->getAll();
     }
 
@@ -29,6 +30,7 @@ class AlbumsController extends BaseController {
                 $this->addErrorMessage("Cannot create album.");
             }
         }
+        $this->renderView(__FUNCTION__);
     }
 
     public function edit($id) {
@@ -49,6 +51,7 @@ class AlbumsController extends BaseController {
             $this->addErrorMessage("Invalid album.");
             $this->redirect("albums");
         }
+        $this->renderView(__FUNCTION__);
     }
 
     public function delete($id) {

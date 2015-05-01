@@ -12,15 +12,18 @@ class PhotosController extends BaseController{
     public function index() {
         // $this->photos = $this->photosModel->getByAlbumId($id);
         // $this->photos = $this->photosModel->getAll();
+        $this->renderView(__FUNCTION__);
     }
 
     public function viewAlbum($id){
         $this->photos = $this->photosModel->getByAlbumId($id);
         $this->albumId = $id;
+        $this->renderView(__FUNCTION__);
     }
 
     public function viewPhoto($id){
         $this->photo = $this->photosModel->getSinglePhotoById($id)[0];
+        $this->renderView(__FUNCTION__);
     }
 
     public function add($id) {
@@ -34,6 +37,7 @@ class PhotosController extends BaseController{
                 $this->addErrorMessage("Cannot upload photo.");
             }
         }
+        $this->renderView(__FUNCTION__);
     }
 
     public function delete($id) {

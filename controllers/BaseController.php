@@ -37,11 +37,8 @@ abstract class BaseController {
         $this->renderView();
     }
 
-    public function renderView($viewName = null, $isPartial = false) {
+    public function renderView($viewName = "index", $isPartial = false) {
         if (!$this->viewRendered) {
-            if ($viewName == null) {
-                $viewName = $this->action;
-            }
             if (!$isPartial) {
                 include_once('views/layouts/' . $this->layout . '/header.php');
             }
