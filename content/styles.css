@@ -54,16 +54,16 @@ a:hover{
     padding: 2%;
 }
 
-.create-album-header{
+.create-album-header, .add-photos-header{
     vertical-align: middle;
     padding: 1%;
 }
 
-.create-album-header>a{
+.create-album-header>a, .add-photos-header>a{
     margin-top: 21px;
 }
 
-.create-album-header>h1, .create-album-header>a{
+.create-album-header>h1, .create-album-header>a, .add-photos-header>h1, .add-photos-header>a{
     display: inline-block;
 }
 
@@ -73,6 +73,7 @@ a:hover{
 }
 
 .album-imgs{
+    max-height: 10em;
     margin-top: 5%;
     width: 48%;
     display: inline-block;
@@ -143,4 +144,30 @@ a:hover{
 
 .panel-title{
     padding: 1em;
+}
+
+.photos-wrapper{
+    width: 100%;
+}
+
+.photo-container{
+    display: inline-block;
+    width: 23%;
+    margin-right: 1%;
+    padding: 1%;
+}
+
+.photo-container a>img{
+    width: 100%;
+}
+
+.photo-view-container{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.photo-view-container>img{
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 2%;
 }

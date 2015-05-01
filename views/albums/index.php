@@ -3,7 +3,7 @@
     <a href="albums/create" class="btn btn-lg btn-success pull-right">Create Album</a>
 </div>
 <?php foreach ($this->albums as $album) : ?>
-    <a href="photos/view/<?= htmlspecialchars($album['id']) ?>" id="album-link-<?= htmlspecialchars($album['id']) ?>" class="normal">
+    <a href="photos/viewalbum/<?= htmlspecialchars($album['id']) ?>" id="album-link-<?= htmlspecialchars($album['id']) ?>" class="normal">
             <div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
