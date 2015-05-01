@@ -95,7 +95,7 @@ abstract class BaseController {
 
     protected function authorize() {
         if (! $this->isLoggedIn()) {
-            $this->redirect("users", "login");
+            $this->redirect("account", "login");
         }
     }
 

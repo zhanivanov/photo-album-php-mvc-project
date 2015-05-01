@@ -11,19 +11,22 @@ class AlbumsController extends BaseController {
     }
 
     public function index() {
-        $this->albums = $this->albumsModel->getAll();
+        $this->authorize();
+        $this->albums = $this->albumsModel->getAllByUserId($_SESSION['userId']);
         $this->renderView();
         // $this->photos = $this->photosModel->getAll();
     }
 
     public function getPhotosByAlbumId($id) {
+        $this->authorize();
         $this->photos = $this->photosModel->getByAlbumId($id);
     }
 
     public function create() {
+        $this->authorize();
         if ($this->isPost()) {
             $name = $_POST['name'];
-            if ($this->albumsModel->create($name)) {
+            if ($this->albumsModel->create($name, $_SESSION['userId'])) {
                 $this->addInfoMessage("Album created.");
                 $this->redirect("albums");
             } else {
@@ -34,6 +37,7 @@ class AlbumsController extends BaseController {
     }
 
     public function edit($id) {
+        $this->authorize();
         if ($this->isPost()) {
             // Edit the album in the database
             $name = $_POST['name'];
@@ -55,6 +59,7 @@ class AlbumsController extends BaseController {
     }
 
     public function delete($id) {
+        $this->authorize();
         if ($this->albumsModel->delete($id)) {
             $this->addInfoMessage("album deleted.");
         } else {

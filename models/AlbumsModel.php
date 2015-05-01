@@ -6,6 +6,11 @@ class AlbumsModel extends BaseModel {
         return $statement->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getAllByUserId($id) {
+        $statement = self::$db->query("SELECT * FROM albums WHERE user_id = $id");
+        return $statement->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function find($id) {
         $statement = self::$db->prepare(
             "SELECT * FROM albums WHERE id = ?");
@@ -14,14 +19,14 @@ class AlbumsModel extends BaseModel {
         return $statement->get_result()->fetch_assoc();
     }
 
-    public function create($name) {
+    public function create($name, $userId) {
         if ($name == '') {
             return false;
         }
         $statement = self::$db->prepare(
-            "INSERT INTO albums (name, created_on /*, user_id*/) VALUES(?, ?)");
+            "INSERT INTO albums (name, created_on , user_id) VALUES(?, ?, ?)");
         $date = date('Y-m-d H:m:s', time());
-        $statement->bind_param("ss", $name, $date);
+        $statement->bind_param("ssi", $name, $date, $userId);
         $statement->execute();
         return $statement->affected_rows > 0;
     }

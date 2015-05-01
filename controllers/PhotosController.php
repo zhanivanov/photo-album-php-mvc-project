@@ -10,23 +10,27 @@ class PhotosController extends BaseController{
     }
 
     public function index() {
-        // $this->photos = $this->photosModel->getByAlbumId($id);
-        // $this->photos = $this->photosModel->getAll();
-        $this->renderView(__FUNCTION__);
+        $this->redirect("home");
+//        $this->photos = $this->photosModel->getByAlbumId($id);
+//        $this->photos = $this->photosModel->getAll();
+//        $this->renderView(__FUNCTION__);
     }
 
     public function viewAlbum($id){
+        $this->authorize();
         $this->photos = $this->photosModel->getByAlbumId($id);
         $this->albumId = $id;
         $this->renderView(__FUNCTION__);
     }
 
     public function viewPhoto($id){
-        $this->photo = $this->photosModel->getSinglePhotoById($id)[0];
+        $this->authorize();
+        $this->photo = $this->photosModel->getSinglePhotoById($id);
         $this->renderView(__FUNCTION__);
     }
 
     public function add($id) {
+        $this->authorize();
         if ($this->isPost()) {
             $this->upload();
             $this->albumId = $id;
@@ -41,7 +45,8 @@ class PhotosController extends BaseController{
     }
 
     public function delete($id) {
-        $currPhoto = $this->photosModel->getSinglePhotoById($id)[0];
+        $this->authorize();
+        $currPhoto = $this->photosModel->getSinglePhotoById($id);
         if ($this->photosModel->delete($id) && unlink($currPhoto['path'])) {
             $this->addInfoMessage("photo deleted.");
         } else {
@@ -52,6 +57,7 @@ class PhotosController extends BaseController{
     }
 
     private function upload() {
+        $this->authorize();
         $target_dir = "content/photos/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $this->path = $target_file;

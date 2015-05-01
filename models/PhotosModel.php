@@ -12,8 +12,10 @@ class PhotosModel extends BaseModel {
     }
 
     public function getSinglePhotoById($id){
-        $statement = self::$db->query("SELECT * FROM photos WHERE id = $id");
-        return $statement->fetch_all(MYSQLI_ASSOC);
+        $statement = self::$db->prepare("SELECT * FROM photos WHERE id = ?");
+        $statement->bind_param("i", $id);
+        $statement->execute();
+        return $statement->get_result()->fetch_assoc();
     }
 
     public function add($path, $id) {

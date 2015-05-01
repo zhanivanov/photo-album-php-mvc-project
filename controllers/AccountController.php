@@ -27,6 +27,7 @@ class AccountController extends BaseController {
                 $isRegistered = $this->accountsModel->register($username, $password, $name);
                 if($isRegistered){
                     $_SESSION['username'] = $username;
+                    $_SESSION['userId'] = $this->accountsModel->getUserId($username);
                     $this->addInfoMessage("Successful registration!");
                     $this->redirect("albums");
                 } else {
@@ -46,6 +47,7 @@ class AccountController extends BaseController {
             $isLogged = $this->accountsModel->login($username, $password);
             if($isLogged){
                 $_SESSION['username'] = $username;
+                $_SESSION['userId'] = $this->accountsModel->getUserId($username);
                 $this->addInfoMessage("Successful login!");
                 $this->redirect("albums");
             } else {

@@ -1,4 +1,4 @@
-<p>I am the Books Index view</p>
+<p>I am the Photos Index view</p>
 
-<h1>List of Books</h1>
+<h1>List of Photos</h1>
 ...

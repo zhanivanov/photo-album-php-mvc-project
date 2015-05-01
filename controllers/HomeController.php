@@ -2,7 +2,11 @@
 
 class HomeController extends BaseController {
     protected function onInit() {
-        $this->title = 'Welcome';
-        $this->renderView();
+        if($this->isLoggedIn()){
+            $this->redirect("albums");
+        } else{
+            $this->title = 'Welcome';
+            $this->renderView();
+        }
     }
 }
