@@ -1,15 +1,16 @@
 <?php
 
-renderMessages('infoMessages', 'info-messages');
-renderMessages('errorMessages', 'error-messages');
 
-function renderMessages($messagesKey, $cssClass) {
-    if (isset($_SESSION[$messagesKey]) && count($_SESSION[$messagesKey]) > 0) {
-        echo '<ul class="' . $cssClass . '">';
-        foreach ($_SESSION[$messagesKey] as $msg) {
-            echo "<li>" . htmlspecialchars($msg) . '</li>';
+function _printMessages(){
+    $types = array("success", "error", "info");
+    foreach ($types as $type) {
+        if(isset($_SESSION[$type]) && !empty($_SESSION[$type]) && is_array($_SESSION[$type])) {
+            foreach ($_SESSION[$type] as $msg) {
+                $shout = strtoupper($type);
+                echo "<div class='notification $type' onclick='$(this).fadeOut(650)'> <span class='strong'>$shout!</span> $msg </div>";
+            }
+            unset($_SESSION[$type]);
         }
-        echo '</ul>';
     }
-    $_SESSION[$messagesKey] = [];
+
 }

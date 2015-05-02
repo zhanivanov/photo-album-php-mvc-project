@@ -43,5 +43,5 @@
             </div>
         </nav>
     </header>
-    <?php include_once('messages.php'); ?>
+    <?php include_once('messages.php'); _printMessages(); ?>
     <main class="jumbotron row" id="wrapper">

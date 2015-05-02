@@ -11,32 +11,35 @@ class AccountController extends BaseController {
         if($this->isPost()) {
             $username = $_POST['username'];
             if($username == null || strlen($username) < 3) {
-                $this->addErrorMessage("Username is invalid. Must be more than 3 characters.");
+                $_SESSION['error'] = array("Username is invalid. Must be more than 3 characters.");
                 $this->redirect("account", "register");
             }
             $password = $_POST['password'];
             if($password == null || strlen($password) < 3) {
-                $this->addErrorMessage("Password is invalid. Must be more than 3 characters.");
+                $_SESSION['error'] = array("Password is invalid. Must be more than 3 characters.");
                 $this->redirect("account", "register");
             }
             $confirmPassword = $_POST['confirmPassword'];
             $name = $_POST['name'];
             if($password != $confirmPassword){
-                $this->addErrorMessage("Passwords are not matching.");
+                $_SESSION['error'] = array("Passwords are not matching.");
             } else {
                 $isRegistered = $this->accountsModel->register($username, $password, $name);
                 if($isRegistered){
                     $_SESSION['username'] = $username;
                     $_SESSION['userId'] = $this->accountsModel->getUserId($username);
-                    $this->addInfoMessage("Successful registration!");
+                    $_SESSION['success'] = array("Successful registration!");
                     $this->redirect("albums");
                 } else {
-                    $this->addErrorMessage("Register failed");
+                    $_SESSION['error'] = array("Register failed!");
                 }
             }
         }
-
-        $this->renderView(__FUNCTION__);
+        if($this->isLoggedIn()) {
+            $this->redirect("home");
+        } else{
+            $this->renderView(__FUNCTION__);
+        }
     }
 
     public function login() {
@@ -48,19 +51,23 @@ class AccountController extends BaseController {
             if($isLogged){
                 $_SESSION['username'] = $username;
                 $_SESSION['userId'] = $this->accountsModel->getUserId($username);
-                $this->addInfoMessage("Successful login!");
+                $_SESSION['success']= array("Successful login!");
                 $this->redirect("albums");
             } else {
-                $this->addErrorMessage("Login failed");
+                $_SESSION['error']= array("Login failed");
             }
         }
 
-        $this->renderView(__FUNCTION__);
+        if($this->isLoggedIn()) {
+            $this->redirect("home");
+        } else{
+            $this->renderView(__FUNCTION__);
+        }
     }
 
     public function logout() {
         unset($_SESSION['username']);
-        $this->addInfoMessage("Successful logout!");
+        $_SESSION['info']= array("Successful logout!");
         $this->redirect("home");
     }
 }

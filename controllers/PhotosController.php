@@ -35,10 +35,10 @@ class PhotosController extends BaseController{
             $this->upload();
             $this->albumId = $id;
             if ($this->photosModel->add($this->path, $this->albumId)) {
-                $this->addInfoMessage("Photo uploaded.");
+                $_SESSION['success'] = array("The photo was uploaded successfully!");
                 $this->redirect("photos/viewalbum/" . $id);
             } else {
-                $this->addErrorMessage("Cannot upload photo.");
+                $_SESSION['error'] = array("Cannot upload the photo!");
             }
         }
         $this->renderView(__FUNCTION__);
@@ -48,10 +48,9 @@ class PhotosController extends BaseController{
         $this->authorize();
         $currPhoto = $this->photosModel->getSinglePhotoById($id);
         if ($this->photosModel->delete($id) && unlink($currPhoto['path'])) {
-            $this->addInfoMessage("photo deleted.");
+            $_SESSION['info'] = array("The photo was deleted successfully!");
         } else {
-            $this->addErrorMessage("Cannot delete photo #" . htmlspecialchars($id) . '.');
-            $this->addErrorMessage("Maybe it is in use.");
+            $_SESSION['error'] = array("Cannot delete photo #" . htmlspecialchars($id) . '.', "Maybe it is in use.");
         }
         $this->redirect("photos/viewalbum/" . $currPhoto['album_id']);
     }
@@ -67,38 +66,37 @@ class PhotosController extends BaseController{
         if(isset($_POST["submit"])) {
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
+                // echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
-                echo "File is not an image.";
+                $_SESSION['error'] = array("File is not an image.");
                 $uploadOk = 0;
             }
         }
         // Check if file already exists
         if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
+            $_SESSION['error'] = array("Sorry, file already exists.");
             $uploadOk = 0;
         }
         // Check file size
         if ($_FILES["fileToUpload"]["size"] > 1500000) {
-            echo "Sorry, your file is too large.";
+            $_SESSION['error'] = array("Sorry, your file is too large.");
             $uploadOk = 0;
         }
         // Allow certain file formats
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $_SESSION['error'] = array("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
             $uploadOk = 0;
         }
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            $_SESSION['error'] = array("Sorry, your file was not uploaded.");
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                $_SESSION['error'] = array("Sorry, there was an error uploading your file.");
             }
         }
     }

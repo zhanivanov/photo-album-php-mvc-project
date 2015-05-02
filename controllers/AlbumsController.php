@@ -27,10 +27,10 @@ class AlbumsController extends BaseController {
         if ($this->isPost()) {
             $name = $_POST['name'];
             if ($this->albumsModel->create($name, $_SESSION['userId'])) {
-                $this->addInfoMessage("Album created.");
+                $_SESSION['success'] = array("Album created successfully!");
                 $this->redirect("albums");
             } else {
-                $this->addErrorMessage("Cannot create album.");
+                $_SESSION['error'] = array("Could not create the album!");
             }
         }
         $this->renderView(__FUNCTION__);
@@ -42,17 +42,17 @@ class AlbumsController extends BaseController {
             // Edit the album in the database
             $name = $_POST['name'];
             if ($this->albumsModel->edit($id, $name)) {
-                $this->addInfoMessage("Album edited.");
+                $_SESSION['info'] = array("Album successfully edited!");
                 $this->redirect("albums");
             } else {
-                $this->addErrorMessage("Cannot edit album.");
+                $_SESSION['error'] = array("Could not edit the album!");
             }
         }
 
         // Display edit album form
         $this->album = $this->albumsModel->find($id);
         if (!$this->album) {
-            $this->addErrorMessage("Invalid album.");
+            $_SESSION['error'] = array("Invalid album!");
             $this->redirect("albums");
         }
         $this->renderView(__FUNCTION__);
@@ -61,10 +61,9 @@ class AlbumsController extends BaseController {
     public function delete($id) {
         $this->authorize();
         if ($this->albumsModel->delete($id)) {
-            $this->addInfoMessage("album deleted.");
+            $_SESSION['success'] = array("Album deleted successfully!");
         } else {
-            $this->addErrorMessage("Cannot delete album #" . htmlspecialchars($id) . '.');
-            $this->addErrorMessage("Maybe it is in use.");
+            $_SESSION['error'] = array("Cannot delete album #" . htmlspecialchars($id) . '.', "Maybe it is in use.");
         }
         $this->redirect("albums");
     }
