@@ -95,6 +95,7 @@ abstract class BaseController {
 
     protected function authorize() {
         if (! $this->isLoggedIn()) {
+            $_SESSION['info'] = array("Please login first!");
             $this->redirect("account", "login");
         }
     }

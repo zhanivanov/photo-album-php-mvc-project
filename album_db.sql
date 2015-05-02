@@ -24,11 +24,13 @@ CREATE TABLE IF NOT EXISTS `albums_db`.`users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `name` VARCHAR(105) NULL DEFAULT NULL,
-  `password` VARCHAR(20) NOT NULL,
+  `password_hash` VARCHAR(200) NOT NULL,
   `is_admin` INT(11) NOT NULL DEFAULT '0',
+  `register_date` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -40,6 +42,8 @@ CREATE TABLE IF NOT EXISTS `albums_db`.`albums` (
   `name` VARCHAR(45) NOT NULL,
   `created_on` DATETIME NOT NULL,
   `user_id` INT(11) NULL DEFAULT NULL,
+  `is_public` INT(11) NULL DEFAULT '0',
+  `votes` INT(11) NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   INDEX `user_id_idx` (`user_id` ASC),
   CONSTRAINT `albums_users_fk`
@@ -48,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `albums_db`.`albums` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 32
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -58,15 +63,16 @@ CREATE TABLE IF NOT EXISTS `albums_db`.`photos` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `path` VARCHAR(100) NOT NULL,
   `album_id` INT(11) NOT NULL,
+  `created_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `path_UNIQUE` (`path` ASC),
   INDEX `photos_albums_fk_idx` (`album_id` ASC),
   CONSTRAINT `photos_albums_fk`
     FOREIGN KEY (`album_id`)
     REFERENCES `albums_db`.`albums` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 49
 DEFAULT CHARACTER SET = utf8;
 
 

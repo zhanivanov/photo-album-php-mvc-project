@@ -66,6 +66,7 @@ class AccountController extends BaseController {
     }
 
     public function logout() {
+        $this->authorize();
         unset($_SESSION['username']);
         $_SESSION['info']= array("Successful logout!");
         $this->redirect("home");

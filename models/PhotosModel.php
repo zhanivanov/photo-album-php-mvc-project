@@ -8,6 +8,10 @@ class PhotosModel extends BaseModel {
 
     public function getByAlbumId($id) {
         $statement = self::$db->query("SELECT * FROM photos WHERE album_id = $id");
+        $result = self::$db->prepare("SELECT is_public FROM albums WHERE id = ?");
+        $result->bind_param("i", $id);
+        $result->execute();
+        $_SESSION['is_public'] = $result->get_result()->fetch_assoc()['is_public'];
         return $statement->fetch_all(MYSQLI_ASSOC);
     }
 

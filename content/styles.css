@@ -60,6 +60,7 @@ a:hover{
 }
 
 .create-album-header>a, .add-photos-header>a{
+    margin-right: 1%;
     margin-top: 21px;
 }
 
@@ -104,6 +105,23 @@ a:hover{
     background-position: 40px -2px;
     width: 40px;
     height: 3em;
+}
+
+.vote-album{
+    position: relative;
+    top: -3em;
+    background-image:url(/content/images/like.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+
+.vote-num{
+    position: absolute;
+    padding: 10px;
+    top: -40px;
+    left: 340px;
 }
 
 .delete-album{

@@ -23,8 +23,10 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                     <?php if($this->isLoggedIn()) : ?>
-                        <div class="col-lg-10"></div>
-                        <ul class="nav navbar-nav logged-in-info">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li><a href="/albums/publicalbums">Browse albums</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hello, <?= $_SESSION['username']; ?><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">

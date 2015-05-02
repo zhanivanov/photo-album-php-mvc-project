@@ -11,6 +11,45 @@ class AlbumsModel extends BaseModel {
         return $statement->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getAllPublic() {
+        $isPublic = 1;
+        $statement = self::$db->query("SELECT * FROM albums WHERE is_public = $isPublic");
+        return $statement->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function makePublic($id){
+        $setPublic = 1;
+        $statement = self::$db->prepare("UPDATE albums SET is_public = ? WHERE id = ?");
+        $statement->bind_param("ii", $setPublic, $id);
+        $statement->execute();
+
+        return true;
+    }
+
+    public function makePrivate($id){
+        $setPrivate = 0;
+        $statement = self::$db->prepare("UPDATE albums SET is_public = ? WHERE id = ?");
+        $statement->bind_param("ii", $setPrivate, $id);
+        $statement->execute();
+
+        return true;
+    }
+
+    public function vote($id){
+        $getVotesStm = self::$db->prepare("SELECT votes FROM albums WHERE id = ?");
+        $getVotesStm->bind_param("i", $id);
+        $getVotesStm->execute();
+        $votes = $getVotesStm->get_result()->fetch_assoc()['votes'];
+        
+        $votes += 1;
+
+        $statement = self::$db->prepare("UPDATE albums SET votes = ? WHERE id = ?");
+        $statement->bind_param("ii", $votes, $id);
+        $statement->execute();
+
+        return true;
+    }
+
     public function find($id) {
         $statement = self::$db->prepare(
             "SELECT * FROM albums WHERE id = ?");

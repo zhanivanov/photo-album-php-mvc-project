@@ -22,6 +22,30 @@ class AlbumsController extends BaseController {
         $this->photos = $this->photosModel->getByAlbumId($id);
     }
 
+    public function publicAlbums(){
+        $this->authorize();
+        $this->albums = $this->albumsModel->getAllPublic();
+        $this->renderView(__FUNCTION__);
+    }
+
+    public function makePublic($id){
+        $this->authorize();
+        $this->albums = $this->albumsModel->makePublic($id);
+        $this->redirect("photos", "viewalbum", array($id));
+    }
+
+    public function makePrivate($id){
+        $this->authorize();
+        $this->albums = $this->albumsModel->makePrivate($id);
+        $this->redirect("photos", "viewalbum", array($id));
+    }
+
+    public function vote($id){
+        $this->authorize();
+        $this->albums = $this->albumsModel->vote($id);
+        $this->redirect("albums", "publicalbums");
+    }
+
     public function create() {
         $this->authorize();
         if ($this->isPost()) {
